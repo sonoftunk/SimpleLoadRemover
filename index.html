@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timestamp Calculation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="timestamp1">Loading Start (mm:ss)</label>
+        <input type="text" id="timestamp1" placeholder="mm:ss">
+    </div>
+    <div class="container">
+        <label for="timestamp2">Loading Stop (mm:ss)</label>
+        <input type="text" id="timestamp2" placeholder="mm:ss">
+    </div>
+    <div class="container">
+        <label for="timestamp3">Time With Loads (mm:ss)</label>
+        <input type="text" id="timestamp3" placeholder="mm:ss">
+    </div>
+    <button onclick="calculateTime()">Calculate</button>
+    <p id="result">Time without Loads: </p>
+
+    <script>
+      function parseTime(timeStr) {
+          const [minutes, seconds] = timeStr.split(':').map(Number);
+          return minutes * 60 + seconds;
+      }
+      
+      function formatTime(totalSeconds) {
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+          return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      }
+      
+      function calculateTime() {
+          const timestamp1 = document.getElementById('timestamp1').value;
+          const timestamp2 = document.getElementById('timestamp2').value;
+          const timestamp3 = document.getElementById('timestamp3').value;
+      
+          const time1 = parseTime(timestamp1);
+          const time2 = parseTime(timestamp2);
+          const time3 = parseTime(timestamp3);
+      
+          const difference = time3 - (time2 - time1);
+          const result = formatTime(difference);
+      
+          document.getElementById('result').innerText = 'Result: ' + result;
+      }
+    </script>
+</body>
+</html>
